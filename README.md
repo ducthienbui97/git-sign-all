@@ -1,5 +1,8 @@
 # git-sign-all
+
 Retrospectively GPG sign all of your previous commits.
+
+![demo.gif](demo.gif)
 
 ## Install
 ``` sh
@@ -16,4 +19,3 @@ or
 ``` sh
 $ git sign-all <author_email>
 ```
-![demo.gif](demo.gif)
