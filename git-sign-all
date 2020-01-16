@@ -1,4 +1,26 @@
-# This code is copied from Stackoverflow answer of 
-# Sebastian Mancke (https://stackoverflow.com/users/4342908/sebastian-mancke) 
-# at https://stackoverflow.com/a/27387391/8339901
-git filter-branch -f --commit-filter 'git commit-tree -S "$@"' HEAD
+if [ -z $(git config user.signingkey) ]; then
+  echo "Signing key is not specified!"
+  exit 1
+fi
+
+if [ $# -eq 0 ]; then
+  EMAIL=$(git config user.email)
+else
+  if [ $# -eq 1]; then
+    EMAIL=$1
+  else
+    >&2 echo "Usage: $0 <author email>"
+    exit 1
+  fi
+fi
+echo "Signing as $EMAIL"
+export EMAIL
+
+git filter-branch -f --commit-filter '
+  if [ "$GIT_COMMITTER_EMAIL" = ${EMAIL} ];
+  then 
+    git commit-tree -S "$@";
+  else 
+    git commit-tree "$@";
+  fi' HEAD
+
