@@ -1,0 +1,4 @@
+# This code is copied from Stackoverflow answer of 
+# Sebastian Mancke (https://stackoverflow.com/users/4342908/sebastian-mancke) 
+# at https://stackoverflow.com/a/27387391/8339901
+git filter-branch -f --commit-filter 'git commit-tree -S "$@"' HEAD
